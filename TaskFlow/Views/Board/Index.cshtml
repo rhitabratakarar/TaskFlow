@@ -1,12 +1,13 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;">
+        <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="todo-section"
+            ondrop="ondrop_handler(event)" ondragover="ondragover_handler(event)">
             <div class="h5 text-center my-3">Todo</div>
             <div class="container border-top">
                 @{
                     for (int i = 0; i < 3; i++)
                     {
-                        <div class="accordion my-3 shadow-sm">
+                        <div class="accordion my-3 shadow-sm" draggable="true" id="accordian-@i" ondragstart="ondragstart_handler(event);">
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="heading-@i">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -32,13 +33,29 @@
 
             </div>
         </div>
-        <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;">
+        <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="doing-section"
+            ondrop="ondrop_handler(event);" ondragover="ondragover_handler(event)">
             <div class="h5 text-center my-3">Doing</div>
             <div class="container border-top"></div>
         </div>
-        <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;">
+        <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="done-section"
+            ondrop="ondrop_handler(event);" ondragover="ondragover_handler(event)">
             <div class="h5 text-center my-3">Done</div>
-            <div class="container border-top"></div>
+            <div class="container border-top" id="done-elements-section"></div>
         </div>
     </div>
 </div>
+
+<script>
+    function ondragstart_handler(event) {
+        console.log(event);
+        console.log(event.target.id);
+    }
+    function ondrop_handler(event) {
+        event.preventDefault();
+        const whereTheElementIsMoving = event.target.id;
+    }
+    function ondragover_handler(event) {
+        event.preventDefault();
+    }
+</script>
