@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TaskFlow.Interfaces;
+using TaskFlow.Models;
+using TaskFlow.Enums;
 
 public class BoardController : Controller
 {
@@ -10,8 +12,15 @@ public class BoardController : Controller
         this._logger = logger;
         this._service = service;
     }
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        IList<IWorkItem> workitems = await _service.GetAll();
+        WorkItemsDTO dto = new()
+        {
+            Todos = workitems.Where(item => item.Status == Status.Todo).ToList(),
+            Doing = workitems.Where(item => item.Status == Status.Doing).ToList(),
+            Done = workitems.Where(item => item.Status == Status.Done).ToList()
+        };
+        return View(dto);
     }
 }

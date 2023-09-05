@@ -1,10 +1,12 @@
-using TaskFlow.Classes;
+using TaskFlow.Services;
 using TaskFlow.Interfaces;
+// using TaskFlow.Db;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+// builder.Services.AddSingleton<DatabaseContext, DatabaseContext>();
 builder.Services.AddSingleton<IBoardService, BoardService>();
 
 var app = builder.Build();
