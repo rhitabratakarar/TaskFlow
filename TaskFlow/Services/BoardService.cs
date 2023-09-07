@@ -1,27 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using TaskFlow.Interfaces;
-// using TaskFlow.Db;
-using TaskFlow.Models;
+using TaskFlow.Db;
 
 namespace TaskFlow.Services;
 public class BoardService : IBoardService
 {
-    // private readonly DatabaseContext dbContext;
-    // public BoardService(DatabaseContext dbContext)
-    public BoardService()
+    private readonly DatabaseContext _dbContext;
+    public BoardService(DatabaseContext dbContext)
     {
-        
+        this._dbContext = dbContext;
     }
 
     public async Task<IList<IWorkItem>> GetAll()
     {
-        IList<IWorkItem> items = new List<IWorkItem>()
-        {
-            new WorkItem() { Description= "this is work", Header= "this is header", Id=1, Status=Enums.Status.Todo },
-            new WorkItem() { Description= "this is work", Header= "this is header2", Id=2, Status=Enums.Status.Todo },
-            new WorkItem() { Description= "this is work", Header= "this is header3", Id=3, Status=Enums.Status.Todo }
-        };
-        // return await dbContext.WorkItems.ToListAsync();
-        return items;
+        return await this._dbContext.WorkItems.ToListAsync<IWorkItem>();
     }
 }

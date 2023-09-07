@@ -1,13 +1,16 @@
 using TaskFlow.Services;
 using TaskFlow.Interfaces;
-// using TaskFlow.Db;
+using TaskFlow.Db;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-// builder.Services.AddSingleton<DatabaseContext, DatabaseContext>();
-builder.Services.AddSingleton<IBoardService, BoardService>();
+builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(builder.Configuration["ConnectionString"])); 
+builder.Services.AddScoped<DatabaseContext, DatabaseContext>();
+builder.Services.AddScoped<IBoardService, BoardService>();
 
 var app = builder.Build();
 

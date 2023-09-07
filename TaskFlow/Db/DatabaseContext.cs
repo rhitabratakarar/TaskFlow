@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using TaskFlow.Interfaces;
+using TaskFlow.Models;
 
-// namespace TaskFlow.Db;
+namespace TaskFlow.Db;
 
-// public class DatabaseContext : DbContext
-// {
-//     public DbSet<IWorkItem> WorkItems { get; set; }
-//     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
-// }
+public class DatabaseContext : DbContext
+{
+    public DbSet<WorkItem> WorkItems { get; set; }
+    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
+}
