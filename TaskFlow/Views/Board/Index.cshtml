@@ -7,11 +7,11 @@
             ondrop="ondrop_handler(event)" ondragover="ondragover_handler(event)">
             <div class="h5 text-center my-3">Todo</div>
             <div class="container border-top">
+                <div class="w-100" style="height: 20px;" id="todo-section-droppable-div-topmost"
+                    ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
                 @{
                     foreach (IWorkItem item in @Model.Todos!)
                     {
-                        <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
-                            ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
                         <div class="accordion  shadow-sm" draggable="true" id="accordian-@item.Id"
                             ondragstart="ondragstart_handler(event);">
                             <div class="accordion-item">
@@ -30,6 +30,8 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
+                            ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
                     }
                 }
             </div>
@@ -38,11 +40,11 @@
             ondrop="ondrop_handler(event);" ondragover="ondragover_handler(event)">
             <div class="h5 text-center my-3">Doing</div>
             <div class="container border-top">
+                <div class="w-100" style="height: 20px;" id="doing-section-droppable-div-topmost"
+                    ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
                 @{
                     foreach (IWorkItem item in @Model.Doing!)
                     {
-                        <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
-                            ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
                         <div class="accordion  shadow-sm" draggable="true" id="accordian-@item.Id"
                             ondragstart="ondragstart_handler(event);">
                             <div class="accordion-item">
@@ -61,6 +63,8 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
+                            ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
                     }
                 }
             </div>
@@ -69,11 +73,11 @@
             ondrop="ondrop_handler(event);" ondragover="ondragover_handler(event)">
             <div class="h5 text-center my-3">Done</div>
             <div class="container border-top">
+                <div class="w-100" style="height: 20px;" id="done-section-droppable-div-topmost"
+                    ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
                 @{
                     foreach (IWorkItem item in @Model.Done!)
                     {
-                        <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
-                            ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
                         <div class="accordion  shadow-sm" draggable="true" id="accordian-@item.Id"
                             ondragstart="ondragstart_handler(event);">
                             <div class="accordion-item">
@@ -90,7 +94,8 @@
                                 </div>
                             </div>
                         </div>
-                        
+                        <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
+                            ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
                     }
                 }
             </div>
@@ -119,8 +124,6 @@
             const dropDivToTransfer = "droppable-div-" + id;
             document.getElementById(data).insertAdjacentElement("afterend", document.getElementById(dropDivToTransfer));
         }
-
-
     }
     function ondragover_handler(event) {
         event.preventDefault();
