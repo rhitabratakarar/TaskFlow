@@ -8,21 +8,22 @@
             <div class="h5 text-center my-3">Todo</div>
             <div class="container border-top">
                 @{
-                    foreach(IWorkItem item in @Model.Todos!)
+                    foreach (IWorkItem item in @Model.Todos!)
                     {
-                        <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id" ondragover="ondragover_handler(event);"
-                            ondrop="ondrop_handler(event);"></div>
+                        <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
+                            ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
                         <div class="accordion  shadow-sm" draggable="true" id="accordian-@item.Id"
                             ondragstart="ondragstart_handler(event);">
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="heading-@item.Id">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapse-@item.Id" aria-expanded="false" aria-controls="collapse-@item.Id">
+                                        data-bs-target="#collapse-@item.Id" aria-expanded="false"
+                                        aria-controls="collapse-@item.Id">
                                         @item.Header
                                     </button>
                                 </h2>
-                                <div id="collapse-@item.Id" class="accordion-collapse collapse" aria-labelledby="heading-@item.Id"
-                                    data-bs-parent="#accordion-@item.Id">
+                                <div id="collapse-@item.Id" class="accordion-collapse collapse"
+                                    aria-labelledby="heading-@item.Id" data-bs-parent="#accordion-@item.Id">
                                     <div class="accordion-body">
                                         @item.Description
                                     </div>
@@ -38,21 +39,22 @@
             <div class="h5 text-center my-3">Doing</div>
             <div class="container border-top">
                 @{
-                    foreach(IWorkItem item in @Model.Doing!)
+                    foreach (IWorkItem item in @Model.Doing!)
                     {
-                        <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id" ondragover="ondragover_handler(event);"
-                            ondrop="ondrop_handler(event);"></div>
+                        <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
+                            ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
                         <div class="accordion  shadow-sm" draggable="true" id="accordian-@item.Id"
                             ondragstart="ondragstart_handler(event);">
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="heading-@item.Id">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapse-@item.Id" aria-expanded="false" aria-controls="collapse-@item.Id">
+                                        data-bs-target="#collapse-@item.Id" aria-expanded="false"
+                                        aria-controls="collapse-@item.Id">
                                         @item.Header
                                     </button>
                                 </h2>
-                                <div id="collapse-@item.Id" class="accordion-collapse collapse" aria-labelledby="heading-@item.Id"
-                                    data-bs-parent="#accordion-@item.Id">
+                                <div id="collapse-@item.Id" class="accordion-collapse collapse"
+                                    aria-labelledby="heading-@item.Id" data-bs-parent="#accordion-@item.Id">
                                     <div class="accordion-body">
                                         @item.Description
                                     </div>
@@ -66,27 +68,29 @@
         <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="done-section"
             ondrop="ondrop_handler(event);" ondragover="ondragover_handler(event)">
             <div class="h5 text-center my-3">Done</div>
-            <div class="container border-top" id="done-elements-section">
+            <div class="container border-top">
                 @{
-                    foreach(IWorkItem item in @Model.Done!)
+                    foreach (IWorkItem item in @Model.Done!)
                     {
-                        <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id" ondragover="ondragover_handler(event);"
-                            ondrop="ondrop_handler(event);"></div>
+                        <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
+                            ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
                         <div class="accordion  shadow-sm" draggable="true" id="accordian-@item.Id"
                             ondragstart="ondragstart_handler(event);">
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="heading-@item.Id">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapse-@item.Id" aria-expanded="false" aria-controls="collapse-@item.Id">
+                                        data-bs-target="#collapse-@item.Id" aria-expanded="false"
+                                        aria-controls="collapse-@item.Id">
                                         @item.Header
                                     </button>
                                 </h2>
-                                <div id="collapse-@item.Id" class="accordion-collapse collapse" aria-labelledby="heading-@item.Id"
-                                    data-bs-parent="#accordion-@item.Id">
+                                <div id="collapse-@item.Id" class="accordion-collapse collapse"
+                                    aria-labelledby="heading-@item.Id" data-bs-parent="#accordion-@item.Id">
                                     @item.Description
                                 </div>
                             </div>
                         </div>
+                        
                     }
                 }
             </div>
@@ -102,13 +106,21 @@
         event.preventDefault();
         const data = event.dataTransfer.getData("text");  // accordian-0
         let whereToMove = event.target.id;
-        if (whereToMove.split("-").slice(0, 2).join("-") === "droppable-div") // droppable-div-0
-        {
+
+        if (whereToMove.split("-").slice(0, 2).join("-") === "droppable-div") {
             event.target.insertAdjacentElement("afterend", document.getElementById(data));
             const id = data.split("-")[1];
             const dropDivToTransfer = "droppable-div-" + id;
             document.getElementById(data).insertAdjacentElement("afterend", document.getElementById(dropDivToTransfer));
         }
+        if (["doing-section", "done-section", "todo-section"].includes(whereToMove)) {
+            document.getElementById(whereToMove).children[1].appendChild(document.getElementById(data));
+            const id = data.split("-")[1];
+            const dropDivToTransfer = "droppable-div-" + id;
+            document.getElementById(data).insertAdjacentElement("afterend", document.getElementById(dropDivToTransfer));
+        }
+
+
     }
     function ondragover_handler(event) {
         event.preventDefault();
