@@ -1,19 +1,29 @@
 @model TaskFlow.Models.WorkItemsDTO;
 @using TaskFlow.Interfaces;
 
+<div id="contextMenu" class="context-menu" style="display: none">
+    <ul class="menu shadow d-flex flex-column rounded p-2">
+        <li class="link"><a href="#"><i class="fa fa-link" aria-hidden="true"></i>Open</a></li>
+        <li class="link"><a href="#"><i class="fa-solid fa-wand-magic-sparkles"></i>Create New</a></li>
+        <li class="paste"><a href="#"><i class="fa fa-paste" aria-hidden="true"></i> Move to</a></li>
+        <li class="trash"><a href="#"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
+    </ul>
+</div>
+
 <div class="container">
     <div class="row">
         <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="todo-section"
-            ondrop="ondrop_handler(event)" ondragover="ondragover_handler(event)">
-            <div class="h5 text-center my-3">Todo</div>
+            oncontextmenu="onContextMenuHandler(event);" ondrop="onDropHandler(event)"
+            ondragover="onDragOverHandler(event);">
+            <div class="h5 text-center my-3" id="todo-section-header">Todo</div>
             <div class="container border-top">
                 <div class="w-100" style="height: 20px;" id="todo-section-droppable-div-topmost"
-                    ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
+                    ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
                 @{
                     foreach (IWorkItem item in @Model.Todos!)
                     {
                         <div class="shadow-sm pointer p-3 border rounded" role="button" draggable="true" id="accordian-@item.Id"
-                            ondragstart="ondragstart_handler(event);" data-bs-toggle="modal" data-bs-target="#modal-@item.Id">
+                            ondragstart="onDragStartHandler(event);" data-bs-toggle="modal" data-bs-target="#modal-@item.Id">
                             @item.Header
                         </div>
 
@@ -36,22 +46,22 @@
                         </div>
 
                         <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
-                            ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
+                            ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
                     }
                 }
             </div>
         </div>
         <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="doing-section"
-            ondrop="ondrop_handler(event);" ondragover="ondragover_handler(event)">
-            <div class="h5 text-center my-3">Doing</div>
+            ondrop="onDropHandler(event);" ondragover="onDragOverHandler(event)">
+            <div class="h5 text-center my-3" id="doing-section-header">Doing</div>
             <div class="container border-top">
                 <div class="w-100" style="height: 20px;" id="doing-section-droppable-div-topmost"
-                    ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
+                    ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
                 @{
                     foreach (IWorkItem item in @Model.Doing!)
                     {
                         <div class="shadow-sm pointer p-3 border rounded" role="button" draggable="true" id="accordian-@item.Id"
-                            ondragstart="ondragstart_handler(event);" data-bs-toggle="modal" data-bs-target="#modal-@item.Id">
+                            ondragstart="onDragStartHandler(event);" data-bs-toggle="modal" data-bs-target="#modal-@item.Id">
                             @item.Header
                         </div>
 
@@ -74,22 +84,22 @@
                         </div>
 
                         <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
-                            ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
+                            ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
                     }
                 }
             </div>
         </div>
         <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="done-section"
-            ondrop="ondrop_handler(event);" ondragover="ondragover_handler(event)">
-            <div class="h5 text-center my-3">Done</div>
+            ondrop="onDropHandler(event);" ondragover="onDragOverHandler(event)">
+            <div class="h5 text-center my-3" id="done-section-header">Done</div>
             <div class="container border-top">
                 <div class="w-100" style="height: 20px;" id="done-section-droppable-div-topmost"
-                    ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
+                    ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
                 @{
                     foreach (IWorkItem item in @Model.Done!)
                     {
                         <div class="shadow-sm pointer p-3 border rounded" role="button" draggable="true" id="accordian-@item.Id"
-                            ondragstart="ondragstart_handler(event);" data-bs-toggle="modal" data-bs-target="#modal-@item.Id">
+                            ondragstart="onDragStartHandler(event);" data-bs-toggle="modal" data-bs-target="#modal-@item.Id">
                             @item.Header
                         </div>
 
@@ -111,7 +121,7 @@
                             </div>
                         </div>
                         <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
-                            ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
+                            ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
                     }
                 }
             </div>
@@ -120,14 +130,31 @@
 </div>
 
 <script>
-    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-        return new bootstrap.Popover(popoverTriggerEl);
-    });
-    function ondragstart_handler(event) {
+    document.onclick = hideMenu;
+    function hideMenu() {
+        document.getElementById("contextMenu").style.display = "none";
+    }
+    function rightClick(e) {
+        e.preventDefault();
+
+        if (document.getElementById("contextMenu").style.display == "block") {
+            hideMenu();
+        } else {
+            var menu = document.getElementById("contextMenu");
+            menu.style.display = 'block';
+            menu.style.position = "absolute";
+            menu.style.left = e.pageX + "px";
+            menu.style.top = e.pageY + "px";
+        }
+    }
+    function onDragStartHandler(event) {
         event.dataTransfer.setData("text", event.target.id);
     }
-    function ondrop_handler(event) {
+    function onContextMenuHandler(event) {
+        event.preventDefault();
+        rightClick(event);
+    }
+    function onDropHandler(event) {
         event.preventDefault();
         const data = event.dataTransfer.getData("text");  // accordian-0
         let whereToMove = event.target.id;
@@ -145,7 +172,7 @@
             document.getElementById(data).insertAdjacentElement("afterend", document.getElementById(dropDivToTransfer));
         }
     }
-    function ondragover_handler(event) {
+    function onDragOverHandler(event) {
         event.preventDefault();
     }
 </script>
