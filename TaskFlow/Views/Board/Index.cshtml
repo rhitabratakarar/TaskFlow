@@ -12,23 +12,9 @@
                 @{
                     foreach (IWorkItem item in @Model.Todos!)
                     {
-                        <div class="accordion shadow-sm" draggable="true" id="accordian-@item.Id"
+                        <div class="shadow-sm pointer p-3 border rounded" role="button" draggable="true" id="accordian-@item.Id"
                             ondragstart="ondragstart_handler(event);">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="heading-@item.Id">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapse-@item.Id" aria-expanded="false"
-                                        aria-controls="collapse-@item.Id">
-                                        @item.Header
-                                    </button>
-                                </h2>
-                                <div id="collapse-@item.Id" class="accordion-collapse collapse"
-                                    aria-labelledby="heading-@item.Id" data-bs-parent="#accordion-@item.Id">
-                                    <div class="accordion-body">
-                                        @item.Description
-                                    </div>
-                                </div>
-                            </div>
+                           @item.Header
                         </div>
                         <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
                             ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
@@ -45,23 +31,9 @@
                 @{
                     foreach (IWorkItem item in @Model.Doing!)
                     {
-                        <div class="accordion  shadow-sm" draggable="true" id="accordian-@item.Id"
+                        <div class="shadow-sm p-3 border rounded" role="button" draggable="true" id="accordian-@item.Id"
                             ondragstart="ondragstart_handler(event);">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="heading-@item.Id">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapse-@item.Id" aria-expanded="false"
-                                        aria-controls="collapse-@item.Id">
-                                        @item.Header
-                                    </button>
-                                </h2>
-                                <div id="collapse-@item.Id" class="accordion-collapse collapse"
-                                    aria-labelledby="heading-@item.Id" data-bs-parent="#accordion-@item.Id">
-                                    <div class="accordion-body">
-                                        @item.Description
-                                    </div>
-                                </div>
-                            </div>
+                            @item.Header
                         </div>
                         <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
                             ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
@@ -78,21 +50,9 @@
                 @{
                     foreach (IWorkItem item in @Model.Done!)
                     {
-                        <div class="accordion  shadow-sm" draggable="true" id="accordian-@item.Id"
+                        <div class="shadow-sm p-3 border rounded" role="button" draggable="true" id="accordian-@item.Id"
                             ondragstart="ondragstart_handler(event);">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="heading-@item.Id">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapse-@item.Id" aria-expanded="false"
-                                        aria-controls="collapse-@item.Id">
-                                        @item.Header
-                                    </button>
-                                </h2>
-                                <div id="collapse-@item.Id" class="accordion-collapse collapse"
-                                    aria-labelledby="heading-@item.Id" data-bs-parent="#accordion-@item.Id">
-                                    @item.Description
-                                </div>
-                            </div>
+                           @item.Header
                         </div>
                         <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
                             ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
