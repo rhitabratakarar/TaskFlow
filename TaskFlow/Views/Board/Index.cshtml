@@ -3,8 +3,8 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="todo-section" ondrop="ondrop_handler(event)"
-            ondragover="ondragover_handler(event)">
+        <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="todo-section"
+            ondrop="ondrop_handler(event)" ondragover="ondragover_handler(event)">
             <div class="h5 text-center my-3">Todo</div>
             <div class="container border-top">
                 <div class="w-100" style="height: 20px;" id="todo-section-droppable-div-topmost"
@@ -13,9 +13,28 @@
                     foreach (IWorkItem item in @Model.Todos!)
                     {
                         <div class="shadow-sm pointer p-3 border rounded" role="button" draggable="true" id="accordian-@item.Id"
-                            ondragstart="ondragstart_handler(event);">
-                           @item.Header
+                            ondragstart="ondragstart_handler(event);" data-bs-toggle="modal" data-bs-target="#modal-@item.Id">
+                            @item.Header
                         </div>
+
+                        <div class="modal" tabindex="-1" id="modal-@item.Id">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">@item.Header</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>@item.Description</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
                             ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
                     }
@@ -31,10 +50,29 @@
                 @{
                     foreach (IWorkItem item in @Model.Doing!)
                     {
-                        <div class="shadow-sm p-3 border rounded" role="button" draggable="true" id="accordian-@item.Id"
-                            ondragstart="ondragstart_handler(event);">
+                        <div class="shadow-sm pointer p-3 border rounded" role="button" draggable="true" id="accordian-@item.Id"
+                            ondragstart="ondragstart_handler(event);" data-bs-toggle="modal" data-bs-target="#modal-@item.Id">
                             @item.Header
                         </div>
+
+                        <div class="modal" tabindex="-1" id="modal-@item.Id">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">@item.Header</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>@item.Description</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
                             ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
                     }
@@ -50,9 +88,27 @@
                 @{
                     foreach (IWorkItem item in @Model.Done!)
                     {
-                        <div class="shadow-sm p-3 border rounded" role="button" draggable="true" id="accordian-@item.Id"
-                            ondragstart="ondragstart_handler(event);">
-                           @item.Header
+                        <div class="shadow-sm pointer p-3 border rounded" role="button" draggable="true" id="accordian-@item.Id"
+                            ondragstart="ondragstart_handler(event);" data-bs-toggle="modal" data-bs-target="#modal-@item.Id">
+                            @item.Header
+                        </div>
+
+                        <div class="modal" tabindex="-1" id="modal-@item.Id">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">@item.Header</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>@item.Description</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
                             ondragover="ondragover_handler(event);" ondrop="ondrop_handler(event);"></div>
