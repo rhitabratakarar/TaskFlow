@@ -42,6 +42,11 @@
         </div>
     </footer>
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        document.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+        });
+    </script>
 </body>
 
 </html>
