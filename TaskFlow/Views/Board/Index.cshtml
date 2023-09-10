@@ -26,11 +26,10 @@
                             <option value="Done">Done</option>
                     </select>
                     </div>
-                    
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-primary" onclick="createNewWorkItem();">Save</button>
             </div>
         </div>
     </div>
@@ -175,12 +174,19 @@
 <script>
     document.onclick = hideMenu;
     let lastRightClickedElementId = "";
+
+    function createNewWorkItem() {
+        
+    }
+
     function hideMenu() {
         document.getElementById("contextMenu").style.display = "none";
     }
+
     function handleModalOpen(event) {
         document.getElementById(lastRightClickedElementId).click();
     }
+
     function showContextMenu(e) {
         var menu = document.getElementById("contextMenu");
         menu.style.display = 'block';
@@ -188,6 +194,7 @@
         menu.style.left = e.pageX + "px";
         menu.style.top = e.pageY + "px";
     }
+
     function rightClick(e) {
         e.preventDefault();
         if (document.getElementById("contextMenu").style.display == "block") {
@@ -197,13 +204,16 @@
             showContextMenu(e);
         }
     }
+
     function onDragStartHandler(event) {
         event.dataTransfer.setData("text", event.target.id);
     }
+
     function onContextMenuHandler(event) {
         event.preventDefault();
         rightClick(event);
     }
+
     function onDropHandler(event) {
         event.preventDefault();
         const data = event.dataTransfer.getData("text");  // accordian-0
@@ -222,6 +232,7 @@
             document.getElementById(data).insertAdjacentElement("afterend", document.getElementById(dropDivToTransfer));
         }
     }
+
     function onDragOverHandler(event) {
         event.preventDefault();
     }
