@@ -29,7 +29,8 @@
 
 <div id="contextMenu" class="context-menu" style="display: none">
     <ul class="menu shadow d-flex flex-column rounded p-2">
-        <li class="link"><a role="button"><i class="fa fa-link" aria-hidden="true"></i>Open</a></li>
+        <li class="link" onclick="handleModalOpen(event);"><a role="button"><i class="fa fa-link"
+                    aria-hidden="true"></i>Open</a></li>
         <li class="link"><a role="button" data-bs-toggle="modal" data-bs-target="#create-new-modal"
                 data-bs-whatever="create-new-workitem"><i class="fa-solid fa-wand-magic-sparkles"></i>Create New</a>
         </li>
@@ -81,7 +82,8 @@
             </div>
         </div>
         <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="doing-section"
-            ondrop="onDropHandler(event);" ondragover="onDragOverHandler(event)" oncontextmenu="onContextMenuHandler(event);">
+            ondrop="onDropHandler(event);" ondragover="onDragOverHandler(event)"
+            oncontextmenu="onContextMenuHandler(event);">
             <div class="h5 text-center my-3" id="doing-section-header"><i class="fa-solid fa-hourglass-end mx-2"
                     style="color: #cb42f5;"></i>Doing</div>
             <div class="container border-top">
@@ -120,7 +122,8 @@
             </div>
         </div>
         <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="done-section"
-            ondrop="onDropHandler(event);" ondragover="onDragOverHandler(event)" oncontextmenu="onContextMenuHandler(event);">
+            ondrop="onDropHandler(event);" ondragover="onDragOverHandler(event)"
+            oncontextmenu="onContextMenuHandler(event);">
             <div class="h5 text-center my-3" id="done-section-header"><i class="fa-solid fa-clipboard-check mx-2"
                     style="color: #16c96a;"></i>Done</div>
             <div class="container border-top">
@@ -162,20 +165,27 @@
 
 <script>
     document.onclick = hideMenu;
+    let lastRightClickedElementId = "";
     function hideMenu() {
         document.getElementById("contextMenu").style.display = "none";
     }
+    function handleModalOpen(event) {
+        document.getElementById(lastRightClickedElementId).click();
+    }
+    function showContextMenu(e) {
+        var menu = document.getElementById("contextMenu");
+        menu.style.display = 'block';
+        menu.style.position = "absolute";
+        menu.style.left = e.pageX + "px";
+        menu.style.top = e.pageY + "px";
+    }
     function rightClick(e) {
         e.preventDefault();
-
         if (document.getElementById("contextMenu").style.display == "block") {
             hideMenu();
         } else {
-            var menu = document.getElementById("contextMenu");
-            menu.style.display = 'block';
-            menu.style.position = "absolute";
-            menu.style.left = e.pageX + "px";
-            menu.style.top = e.pageY + "px";
+            lastRightClickedElementId = e.target.id;
+            showContextMenu(e);
         }
     }
     function onDragStartHandler(event) {
