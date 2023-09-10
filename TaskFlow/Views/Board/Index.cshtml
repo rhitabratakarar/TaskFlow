@@ -2,36 +2,37 @@
 @using TaskFlow.Interfaces;
 
 <div class="modal fade" id="create-new-modal" tabindex="-1" aria-labelledby="create-new-modal-label" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="create-new-modal-label">New Workitem</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label for="create-new-modal-title-text" class="col-form-label">Title:</label>
-            <input type="text" class="form-control" id="create-new-modal-title-text">
-          </div>
-          <div class="mb-3">
-            <label for="create-new-modal-description-text" class="col-form-label">Description:</label>
-            <textarea class="form-control" id="create-new-modal-description-text"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save</button>
-      </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-new-modal-label">New Workitem</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="create-new-modal-title-text" class="col-form-label">Title:</label>
+                        <input type="text" class="form-control" id="create-new-modal-title-text">
+                    </div>
+                    <div class="mb-3">
+                        <label for="create-new-modal-description-text" class="col-form-label">Description:</label>
+                        <textarea class="form-control" id="create-new-modal-description-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <div id="contextMenu" class="context-menu" style="display: none">
     <ul class="menu shadow d-flex flex-column rounded p-2">
         <li class="link"><a role="button"><i class="fa fa-link" aria-hidden="true"></i>Open</a></li>
-        <li class="link"><a role="button" data-bs-toggle="modal" data-bs-target="#create-new-modal" 
-            data-bs-whatever="create-new-workitem"><i class="fa-solid fa-wand-magic-sparkles"></i>Create New</a></li>
+        <li class="link"><a role="button" data-bs-toggle="modal" data-bs-target="#create-new-modal"
+                data-bs-whatever="create-new-workitem"><i class="fa-solid fa-wand-magic-sparkles"></i>Create New</a>
+        </li>
         <li class="paste"><a role="button"><i class="fa fa-paste" aria-hidden="true"></i> Move to</a></li>
         <li class="trash"><a role="button"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
     </ul>
@@ -42,7 +43,8 @@
         <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="todo-section"
             oncontextmenu="onContextMenuHandler(event);" ondrop="onDropHandler(event)"
             ondragover="onDragOverHandler(event);">
-            <div class="h5 text-center my-3" id="todo-section-header"><i class="fa-solid fa-list mx-2" style="color: #4295f5"></i>Todo</div>
+            <div class="h5 text-center my-3" id="todo-section-header"><i class="fa-solid fa-list mx-2"
+                    style="color: #4295f5"></i>Todo</div>
             <div class="container border-top">
                 <div class="w-100" style="height: 20px;" id="todo-section-droppable-div-topmost"
                     ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
@@ -79,9 +81,9 @@
             </div>
         </div>
         <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="doing-section"
-            ondrop="onDropHandler(event);" ondragover="onDragOverHandler(event)">
-            <div class="h5 text-center my-3" id="doing-section-header"><i
-                    class="fa-solid fa-hourglass-end mx-2" style="color: #cb42f5;"></i>Doing</div>
+            ondrop="onDropHandler(event);" ondragover="onDragOverHandler(event)" oncontextmenu="onContextMenuHandler(event);">
+            <div class="h5 text-center my-3" id="doing-section-header"><i class="fa-solid fa-hourglass-end mx-2"
+                    style="color: #cb42f5;"></i>Doing</div>
             <div class="container border-top">
                 <div class="w-100" style="height: 20px;" id="doing-section-droppable-div-topmost"
                     ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
@@ -118,9 +120,9 @@
             </div>
         </div>
         <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="done-section"
-            ondrop="onDropHandler(event);" ondragover="onDragOverHandler(event)">
-            <div class="h5 text-center my-3" id="done-section-header"><i
-                    class="fa-solid fa-clipboard-check mx-2" style="color: #16c96a;"></i>Done</div>
+            ondrop="onDropHandler(event);" ondragover="onDragOverHandler(event)" oncontextmenu="onContextMenuHandler(event);">
+            <div class="h5 text-center my-3" id="done-section-header"><i class="fa-solid fa-clipboard-check mx-2"
+                    style="color: #16c96a;"></i>Done</div>
             <div class="container border-top">
                 <div class="w-100" style="height: 20px;" id="done-section-droppable-div-topmost"
                     ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
