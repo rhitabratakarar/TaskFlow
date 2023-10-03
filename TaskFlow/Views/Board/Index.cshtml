@@ -1,239 +1,64 @@
 @model TaskFlow.Models.WorkItemsDTO;
 @using TaskFlow.Interfaces;
 
-<div class="modal fade" id="create-new-modal" tabindex="-1" aria-labelledby="create-new-modal-label" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="create-new-modal-label">New Workitem</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="create-new-modal-title-text" class="col-form-label">Title:</label>
-                        <input type="text" class="form-control" id="create-new-modal-title-text">
-                    </div>
-                    <div class="mb-3">
-                        <label for="create-new-modal-description-text" class="col-form-label">Description:</label>
-                        <textarea class="form-control" id="create-new-modal-description-text"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="create-new-modal-workitem-type" class="col-form-label">Type:</label>
-                        <select class="form-select" aria-label="Select Workitem type" id="create-new-modal-workitem-type">
-                            <option value="Todo" selected>Todo</option>
-                            <option value="Doing">Doing</option>
-                            <option value="Done">Done</option>
-                    </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="createNewWorkItem();">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="contextMenu" class="context-menu" style="display: none">
-    <ul class="menu shadow d-flex flex-column rounded p-2">
-        <li class="link" onclick="handleModalOpen(event);"><a role="button"><i class="fa fa-link"
-                    aria-hidden="true"></i>Open</a></li>
-        <li class="link"><a role="button" data-bs-toggle="modal" data-bs-target="#create-new-modal"
-                data-bs-whatever="create-new-workitem"><i class="fa-solid fa-wand-magic-sparkles"></i>Create New</a>
-        </li>
-        <li class="paste"><a role="button"><i class="fa fa-paste" aria-hidden="true"></i> Move to</a></li>
-        <li class="trash"><a role="button"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
-    </ul>
-</div>
+@await Html.PartialAsync("_NewItemModal.cshtml")
+@await Html.PartialAsync("_ContextMenu.cshtml")
 
 <div class="container">
     <div class="row">
         <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="todo-section"
-            oncontextmenu="onContextMenuHandler(event);" ondrop="onDropHandler(event)"
-            ondragover="onDragOverHandler(event);">
-            <div class="h5 text-center my-3" id="todo-section-header"><i class="fa-solid fa-list mx-2"
-                    style="color: #4295f5"></i>Todo</div>
+             oncontextmenu="onContextMenuHandler(event);" ondrop="onDropHandler(event)"
+             ondragover="onDragOverHandler(event);">
+            <div class="h5 text-center my-3" id="todo-section-header">
+                <i class="fa-solid fa-list mx-2"
+                   style="color: #4295f5"></i>Todo
+            </div>
             <div class="container border-top">
                 <div class="w-100" style="height: 20px;" id="todo-section-droppable-div-topmost"
-                    ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
+                     ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
                 @{
                     foreach (IWorkItem item in @Model.Todos!)
                     {
-                        <div class="shadow-sm pointer p-3 border rounded" role="button" draggable="true" id="accordian-@item.Id"
-                            ondragstart="onDragStartHandler(event);" data-bs-toggle="modal" data-bs-target="#modal-@item.Id">
-                            @item.Header
-                        </div>
-
-                        <div class="modal" tabindex="-1" id="modal-@item.Id">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" contenteditable="true">@item.Header</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p contenteditable="true">@item.Description</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
-                            ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
+                        @await Html.PartialAsync("_WorkItem.cshtml", item)
                     }
                 }
             </div>
         </div>
         <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="doing-section"
-            ondrop="onDropHandler(event);" ondragover="onDragOverHandler(event)"
-            oncontextmenu="onContextMenuHandler(event);">
-            <div class="h5 text-center my-3" id="doing-section-header"><i class="fa-solid fa-hourglass-end mx-2"
-                    style="color: #cb42f5;"></i>Doing</div>
+             ondrop="onDropHandler(event);" ondragover="onDragOverHandler(event)"
+             oncontextmenu="onContextMenuHandler(event);">
+            <div class="h5 text-center my-3" id="doing-section-header">
+                <i class="fa-solid fa-hourglass-end mx-2"
+                   style="color: #cb42f5;"></i>Doing
+            </div>
             <div class="container border-top">
                 <div class="w-100" style="height: 20px;" id="doing-section-droppable-div-topmost"
-                    ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
+                     ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
                 @{
                     foreach (IWorkItem item in @Model.Doing!)
                     {
-                        <div class="shadow-sm pointer p-3 border rounded" role="button" draggable="true" id="accordian-@item.Id"
-                            ondragstart="onDragStartHandler(event);" data-bs-toggle="modal" data-bs-target="#modal-@item.Id">
-                            @item.Header
-                        </div>
-
-                        <div class="modal" tabindex="-1" id="modal-@item.Id">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" contenteditable="true">@item.Header</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p contenteditable="true">@item.Description</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
-                            ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
+                        @await Html.PartialAsync("_WorkItem.cshtml", item)
                     }
                 }
             </div>
         </div>
         <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="done-section"
-            ondrop="onDropHandler(event);" ondragover="onDragOverHandler(event)"
-            oncontextmenu="onContextMenuHandler(event);">
-            <div class="h5 text-center my-3" id="done-section-header"><i class="fa-solid fa-clipboard-check mx-2"
-                    style="color: #16c96a;"></i>Done</div>
+             ondrop="onDropHandler(event);" ondragover="onDragOverHandler(event)"
+             oncontextmenu="onContextMenuHandler(event);">
+            <div class="h5 text-center my-3" id="done-section-header">
+                <i class="fa-solid fa-clipboard-check mx-2"
+                   style="color: #16c96a;"></i>Done
+            </div>
             <div class="container border-top">
                 <div class="w-100" style="height: 20px;" id="done-section-droppable-div-topmost"
-                    ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
+                     ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
                 @{
                     foreach (IWorkItem item in @Model.Done!)
                     {
-                        <div class="shadow-sm pointer p-3 border rounded" role="button" draggable="true" id="accordian-@item.Id"
-                            ondragstart="onDragStartHandler(event);" data-bs-toggle="modal" data-bs-target="#modal-@item.Id">
-                            @item.Header
-                        </div>
-
-                        <div class="modal" tabindex="-1" id="modal-@item.Id">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" contenteditable="true">@item.Header</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p contenteditable="true">@item.Description</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="w-100" style="height: 20px;" id="droppable-div-@item.Id"
-                            ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
+                        @await Html.PartialAsync("_WorkItem.cshtml", item)
                     }
                 }
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    document.onclick = hideMenu;
-    let lastRightClickedElementId = "";
-
-    function createNewWorkItem() {
-        
-    }
-
-    function hideMenu() {
-        document.getElementById("contextMenu").style.display = "none";
-    }
-
-    function handleModalOpen(event) {
-        document.getElementById(lastRightClickedElementId).click();
-    }
-
-    function showContextMenu(e) {
-        var menu = document.getElementById("contextMenu");
-        menu.style.display = 'block';
-        menu.style.position = "absolute";
-        menu.style.left = e.pageX + "px";
-        menu.style.top = e.pageY + "px";
-    }
-
-    function rightClick(e) {
-        e.preventDefault();
-        if (document.getElementById("contextMenu").style.display == "block") {
-            hideMenu();
-        } else {
-            lastRightClickedElementId = e.target.id;
-            showContextMenu(e);
-        }
-    }
-
-    function onDragStartHandler(event) {
-        event.dataTransfer.setData("text", event.target.id);
-    }
-
-    function onContextMenuHandler(event) {
-        event.preventDefault();
-        rightClick(event);
-    }
-
-    function onDropHandler(event) {
-        event.preventDefault();
-        const data = event.dataTransfer.getData("text");  // accordian-0
-        let whereToMove = event.target.id;
-
-        if (whereToMove.split("-").slice(0, 2).join("-") === "droppable-div") {
-            event.target.insertAdjacentElement("afterend", document.getElementById(data));
-            const id = data.split("-")[1];
-            const dropDivToTransfer = "droppable-div-" + id;
-            document.getElementById(data).insertAdjacentElement("afterend", document.getElementById(dropDivToTransfer));
-        }
-        if (["doing-section", "done-section", "todo-section"].includes(whereToMove)) {
-            document.getElementById(whereToMove).children[1].appendChild(document.getElementById(data));
-            const id = data.split("-")[1];
-            const dropDivToTransfer = "droppable-div-" + id;
-            document.getElementById(data).insertAdjacentElement("afterend", document.getElementById(dropDivToTransfer));
-        }
-    }
-
-    function onDragOverHandler(event) {
-        event.preventDefault();
-    }
-</script>

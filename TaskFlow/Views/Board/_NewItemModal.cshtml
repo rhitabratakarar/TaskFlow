@@ -1,0 +1,33 @@
+﻿<div class="modal fade" id="create-new-modal" tabindex="-1" aria-labelledby="create-new-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-new-modal-label">New Workitem</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="create-new-modal-title-text" class="col-form-label">Title:</label>
+                        <input type="text" class="form-control" id="create-new-modal-title-text">
+                    </div>
+                    <div class="mb-3">
+                        <label for="create-new-modal-description-text" class="col-form-label">Description:</label>
+                        <textarea class="form-control" id="create-new-modal-description-text"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="create-new-modal-workitem-type" class="col-form-label">Type:</label>
+                        <select class="form-select" aria-label="Select Workitem type" id="create-new-modal-workitem-type">
+                            <option value="Todo" selected>Todo</option>
+                            <option value="Doing">Doing</option>
+                            <option value="Done">Done</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="createNewWorkItem();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
