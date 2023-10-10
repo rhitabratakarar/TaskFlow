@@ -31,19 +31,22 @@ function rightClick(e) {
     }
 }
 
-function onDragStartHandler(event) {
-    event.dataTransfer.setData("text", event.target.id);
-}
-
 function onContextMenuHandler(event) {
     event.preventDefault();
     rightClick(event);
 }
 
+function onDragStartHandler(event) {
+    event.dataTransfer.setData("id", event.target.id);
+    event.stopPropagation();
+}
+
 function onDropHandler(event) {
     event.preventDefault();
-    const data = event.dataTransfer.getData("text");  // accordian-0
+    event.stopPropagation();
+    const data = event.dataTransfer.getData("id");  // accordian-0
     let whereToMove = event.target.id;
+    console.log(whereToMove);
 
     if (whereToMove.split("-").slice(0, 2).join("-") === "droppable-div") {
         event.target.insertAdjacentElement("afterend", document.getElementById(data));
@@ -61,4 +64,5 @@ function onDropHandler(event) {
 
 function onDragOverHandler(event) {
     event.preventDefault();
+    event.stopPropagation();
 }
