@@ -1,0 +1,22 @@
+﻿@using TaskFlow.Interfaces
+@model IList<TaskFlow.Interfaces.IWorkItem>
+
+
+<div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="done-section"
+     ondrop="onDropHandler(event);" ondragover="onDragOverHandler(event)"
+     oncontextmenu="onContextMenuHandler(event);">
+    <div class="h5 text-center my-3" id="done-section-header">
+        <i class="fa-solid fa-clipboard-check mx-2"
+           style="color: #16c96a;"></i>Done
+    </div>
+    <div class="container border-top">
+        <div class="w-100" style="height: 20px;" id="done-section-droppable-div-topmost"
+             ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
+        @{
+            foreach (IWorkItem item in @Model!)
+            {
+                @await Html.PartialAsync("_WorkItem.cshtml", item)
+            }
+        }
+    </div>
+</div>

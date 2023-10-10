@@ -6,59 +6,8 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="todo-section"
-             oncontextmenu="onContextMenuHandler(event);" ondrop="onDropHandler(event)"
-             ondragover="onDragOverHandler(event);">
-            <div class="h5 text-center my-3" id="todo-section-header">
-                <i class="fa-solid fa-list mx-2"
-                   style="color: #4295f5"></i>Todo
-            </div>
-            <div class="container border-top">
-                <div class="w-100" style="height: 20px;" id="todo-section-droppable-div-topmost"
-                     ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
-                @{
-                    foreach (IWorkItem item in @Model.Todos!)
-                    {
-                        @await Html.PartialAsync("_WorkItem.cshtml", item)
-                    }
-                }
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="doing-section"
-             ondrop="onDropHandler(event);" ondragover="onDragOverHandler(event)"
-             oncontextmenu="onContextMenuHandler(event);">
-            <div class="h5 text-center my-3" id="doing-section-header">
-                <i class="fa-solid fa-hourglass-end mx-2"
-                   style="color: #cb42f5;"></i>Doing
-            </div>
-            <div class="container border-top">
-                <div class="w-100" style="height: 20px;" id="doing-section-droppable-div-topmost"
-                     ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
-                @{
-                    foreach (IWorkItem item in @Model.Doing!)
-                    {
-                        @await Html.PartialAsync("_WorkItem.cshtml", item)
-                    }
-                }
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-12 border" style="min-height: 100vh;" id="done-section"
-             ondrop="onDropHandler(event);" ondragover="onDragOverHandler(event)"
-             oncontextmenu="onContextMenuHandler(event);">
-            <div class="h5 text-center my-3" id="done-section-header">
-                <i class="fa-solid fa-clipboard-check mx-2"
-                   style="color: #16c96a;"></i>Done
-            </div>
-            <div class="container border-top">
-                <div class="w-100" style="height: 20px;" id="done-section-droppable-div-topmost"
-                     ondragover="onDragOverHandler(event);" ondrop="onDropHandler(event);"></div>
-                @{
-                    foreach (IWorkItem item in @Model.Done!)
-                    {
-                        @await Html.PartialAsync("_WorkItem.cshtml", item)
-                    }
-                }
-            </div>
-        </div>
+        @await Html.PartialAsync("_Todos.cshtml", Model.Todos)
+        @await Html.PartialAsync("_Doing.cshtml", Model.Doing)
+        @await Html.PartialAsync("_Done.cshtml", Model.Done)
     </div>
 </div>
