@@ -44,21 +44,31 @@ function onDragStartHandler(event) {
 function onDropHandler(event) {
     event.preventDefault();
     event.stopPropagation();
-    const data = event.dataTransfer.getData("id");  // accordian-0
+    const elementId = event.dataTransfer.getData("id");  // accordian-0
     let whereToMove = event.target.id;
-    console.log(whereToMove);
 
     if (whereToMove.split("-").slice(0, 2).join("-") === "droppable-div") {
-        event.target.insertAdjacentElement("afterend", document.getElementById(data));
-        const id = data.split("-")[1];
+        event.target.insertAdjacentElement("afterend", document.getElementById(elementId));
+        const id = elementId.split("-")[1];
         const dropDivToTransfer = "droppable-div-" + id;
-        document.getElementById(data).insertAdjacentElement("afterend", document.getElementById(dropDivToTransfer));
+        document.getElementById(elementId).insertAdjacentElement("afterend", document.getElementById(dropDivToTransfer));
     }
     if (["doing-section", "done-section", "todo-section"].includes(whereToMove)) {
-        document.getElementById(whereToMove).children[1].appendChild(document.getElementById(data));
-        const id = data.split("-")[1];
+        document.getElementById(whereToMove).children[1].appendChild(document.getElementById(elementId));
+        const id = elementId.split("-")[1];
         const dropDivToTransfer = "droppable-div-" + id;
-        document.getElementById(data).insertAdjacentElement("afterend", document.getElementById(dropDivToTransfer));
+        document.getElementById(elementId).insertAdjacentElement("afterend", document.getElementById(dropDivToTransfer));
+    }
+    const id = elementId.split("-")[1];
+    const elmMovedTo = whereToMove.split("-")[0] === "droppable" ? document.getElementById(whereToMove).parentElement.parentElement.id : whereToMove;
+    updateWorkItemLocation(id, elmMovedTo);
+}
+
+function updateWorkItemLocation(elementId, elementMovedTo) {
+    if (elementMovedTo.split("-").slice(-1)[0] === "section") {
+        $.post("/", { Status: elementMovedTo.split("-")[0], WorkItemId: elementId });
+    } else {
+        console.log("invalid location to move to.");
     }
 }
 

@@ -5,7 +5,7 @@ namespace TaskFlow.Models
 {
     public class MoveItemDTO
     {
-        public Status Status { get; set; }
-        public IWorkItem? WorkItem { get; set; }
+        public string? Status { get; set; }
+        public int? WorkItemId { get; set; }
     }
 }

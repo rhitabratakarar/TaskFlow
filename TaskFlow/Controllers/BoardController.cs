@@ -12,6 +12,7 @@ public class BoardController : Controller
         this._logger = logger;
         this._service = service;
     }
+    [HttpGet("/")]
     public async Task<ActionResult<WorkItemsDTO>> Index()
     {
         IList<IWorkItem> workitems = await _service.GetAll();
@@ -24,15 +25,10 @@ public class BoardController : Controller
         return View(dto);
     }
 
-    //[HttpPost("/moveItem/")]
-    //public IActionResult MoveItem(MoveItemDTO dto)
-    //{
-    //    // moveitemdto => where to move [doing, done, todo], item to move(contains the itemId).
-    //    Console.WriteLine(dto.Status);
-
-    //    if(dto.WorkItem != null)
-    //        Console.WriteLine(dto.WorkItem.Id);
-
-    //    return Ok();
-    //}
+    [HttpPost("/")]
+    public IActionResult MoveItem(MoveItemDTO dto)
+    {
+        Console.WriteLine(dto.WorkItemId + " moved to " + dto.Status);
+        return Ok();
+    }
 }
