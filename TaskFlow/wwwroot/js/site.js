@@ -60,7 +60,8 @@ function onDropHandler(event) {
         document.getElementById(elementId).insertAdjacentElement("afterend", document.getElementById(dropDivToTransfer));
     }
     const id = elementId.split("-")[1];
-    const elmMovedTo = whereToMove.split("-")[0] === "droppable" ? document.getElementById(whereToMove).parentElement.parentElement.id : whereToMove;
+    let elmMovedTo = whereToMove.split("-")[0] === "droppable" ? document.getElementById(whereToMove).parentElement.parentElement.id : whereToMove;
+    elmMovedTo = elmMovedTo[0].toUpperCase() + elmMovedTo.slice(1);
     updateWorkItemLocation(id, elmMovedTo);
 }
 
