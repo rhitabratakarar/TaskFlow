@@ -1,8 +1,22 @@
 ﻿document.onclick = hideMenu;
 let lastRightClickedElementId = "";
+var deleteModal = null;
 
 function createNewWorkItem() {
 
+}
+
+function handleDeleteModalOpen(event) {
+    const delMod = new bootstrap.Modal(document.getElementById('deleteModal'));
+    deleteModal = delMod;
+    deleteModal.show();
+}
+
+function deleteLastRightClickedItem(event) {
+    document.getElementById(lastRightClickedElementId).remove();
+    deleteModal.hide();
+    document.getElementById("droppable-div-" + lastRightClickedElementId.split("-").splice(-1)).remove();
+    deleteModal = null;
 }
 
 function hideMenu() {
