@@ -17,6 +17,13 @@ function deleteLastRightClickedItem(event) {
     deleteModal.hide();
     document.getElementById("droppable-div-" + lastRightClickedElementId.split("-").splice(-1)).remove();
     deleteModal = null;
+    $.ajax({
+        url: "/",
+        dataType: "json",
+        processData: true,
+        data: { id: lastRightClickedElementId.split("-").splice(-1) },
+        type: "DELETE"
+    });
 }
 
 function hideMenu() {

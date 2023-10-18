@@ -41,6 +41,10 @@ public class BoardController : Controller
     [HttpDelete("/")]
     public async Task<IActionResult> DeleteItem(int id)
     {
-        return StatusCode(StatusCodes.Status200OK);
+        bool isItemDeleted = await _service.DeleteItem(id);
+        if (isItemDeleted)
+            return StatusCode(StatusCodes.Status200OK);
+        else
+            return StatusCode(StatusCodes.Status500InternalServerError);
     }
 }

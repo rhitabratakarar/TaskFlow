@@ -13,6 +13,21 @@ public class BoardService : IBoardService
         this._dbContext = dbContext;
     }
 
+    public async Task<bool> DeleteItem(int? idToDelete)
+    {
+        IWorkItem? itemToRemove = await _dbContext.WorkItems.FindAsync(idToDelete);
+        if (itemToRemove != null)
+        {
+            _dbContext.Entry(itemToRemove).State = EntityState.Deleted;
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public async Task<IList<IWorkItem>> GetAll()
     {
         return await this._dbContext.WorkItems.ToListAsync<IWorkItem>();
