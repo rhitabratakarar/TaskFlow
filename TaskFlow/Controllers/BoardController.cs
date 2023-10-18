@@ -27,12 +27,20 @@ public class BoardController : Controller
         return View(dto);
     }
 
-    [HttpPost("/")]
+    [HttpPut("/")]
     public async Task<IActionResult> MoveItem(MoveItemDTO dto)
     {
-        Console.WriteLine(dto.WorkItemId + " moved to " + dto.Status);
         _ = Enum.TryParse(dto.Status, out Status ItemStatusToUpdate);
-        await _service.UpdateItemStatus(dto.WorkItemId, ItemStatusToUpdate);
-        return Ok();
+        bool isSuccess = await _service.UpdateItemStatus(dto.WorkItemId, ItemStatusToUpdate);
+        if (isSuccess)
+            return StatusCode(StatusCodes.Status200OK);
+        else
+            return StatusCode(StatusCodes.Status500InternalServerError);
+    }
+
+    [HttpDelete("/")]
+    public async Task<IActionResult> DeleteItem(int id)
+    {
+        return StatusCode(StatusCodes.Status200OK);
     }
 }

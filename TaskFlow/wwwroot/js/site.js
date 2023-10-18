@@ -81,7 +81,13 @@ function onDropHandler(event) {
 
 function updateWorkItemLocation(elementId, elementMovedTo) {
     if (elementMovedTo.split("-").slice(-1)[0] === "section") {
-        $.post("/", { Status: elementMovedTo.split("-")[0], WorkItemId: elementId });
+        $.ajax({
+            url: "/",
+            type: "PUT",
+            processData: true,
+            dataType: "json",
+            data: { Status: elementMovedTo.split("-")[0], WorkItemId: elementId }
+        });
     } else {
         console.log("invalid location to move to.");
     }
