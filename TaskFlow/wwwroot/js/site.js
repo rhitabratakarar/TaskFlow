@@ -2,8 +2,21 @@
 let lastRightClickedElementId = "";
 var deleteModal = null;
 
-function createNewWorkItem() {
+function createNewWorkItem(event) {
+    let status = document.getElementById('create-new-modal-workitem-type').value;
+    let header = document.getElementById('create-new-modal-title-text').value;
+    let description = document.getElementById('create-new-modal-description-text').value;
 
+    // updating the database.
+    $.ajax({
+        url: "/",
+        dataType: "json",
+        processData: true,
+        data: { Header: header, Description: description, Status: status },
+        type: "POST"
+    });
+
+    // refresh the component.
 }
 
 function handleDeleteModalOpen(event) {

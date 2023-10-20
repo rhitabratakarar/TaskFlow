@@ -3,6 +3,7 @@ using TaskFlow.Interfaces;
 using TaskFlow.Db;
 using TaskFlow.Enums;
 using TaskFlow.Models;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace TaskFlow.Services;
 public class BoardService : IBoardService
@@ -11,6 +12,18 @@ public class BoardService : IBoardService
     public BoardService(DatabaseContext dbContext)
     {
         this._dbContext = dbContext;
+    }
+
+    public async Task<bool> CreateItem(string header, string description, Status status)
+    {
+        EntityEntry workitem = await _dbContext.WorkItems.AddAsync(new WorkItem() { Header = header, Description = description, Status = status });
+        if (workitem != null)
+        {
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+        else
+            return false;
     }
 
     public async Task<bool> DeleteItem(int? idToDelete)

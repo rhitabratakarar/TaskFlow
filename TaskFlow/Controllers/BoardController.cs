@@ -47,4 +47,12 @@ public class BoardController : Controller
         else
             return StatusCode(StatusCodes.Status500InternalServerError);
     }
+
+    [HttpPost("/")]
+    public async Task<IActionResult> CreateItem(NewWorkItemDTO newItem)
+    {
+        _ = Enum.TryParse(newItem.Status, out Status status);
+        _ = await _service.CreateItem(newItem.Header!, newItem.Description!, status);
+        return StatusCode(StatusCodes.Status200OK);
+    }
 }
