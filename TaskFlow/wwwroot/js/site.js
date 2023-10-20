@@ -10,13 +10,36 @@ function createNewWorkItem(event) {
     // updating the database.
     $.ajax({
         url: "/",
-        dataType: "json",
         processData: true,
         data: { Header: header, Description: description, Status: status },
-        type: "POST"
+        type: "POST",
+        success: function () {
+            refreshTheComponents();
+        }
+    })
+}
+
+function refreshTheComponents() {
+    $.ajax({
+        url: "/Todos",
+        success: function (data) {
+            $("#todo-section").replaceWith(data);
+        }
     });
 
-    // refresh the component.
+    $.ajax({
+        url: "/Doing",
+        success: function (data) {
+            $("#doing-section").replaceWith(data);
+        }
+    });
+
+    $.ajax({
+        url: "/Done",
+        success: function (data) {
+            $("#done-section").replaceWith(data);
+        }
+    });
 }
 
 function handleDeleteModalOpen(event) {

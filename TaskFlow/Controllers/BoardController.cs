@@ -14,6 +14,7 @@ public class BoardController : Controller
         _logger = logger;
         _service = service;
     }
+
     [HttpGet("/")]
     public async Task<ActionResult<WorkItemsDTO>> Index()
     {
@@ -52,7 +53,31 @@ public class BoardController : Controller
     public async Task<IActionResult> CreateItem(NewWorkItemDTO newItem)
     {
         _ = Enum.TryParse(newItem.Status, out Status status);
-        _ = await _service.CreateItem(newItem.Header!, newItem.Description!, status);
-        return StatusCode(StatusCodes.Status200OK);
+        bool hasCreated = await _service.CreateItem(newItem.Header!, newItem.Description!, status);
+        if (hasCreated)
+            return StatusCode(StatusCodes.Status200OK);
+        else
+            return StatusCode(StatusCodes.Status500InternalServerError);
+    }
+
+    [HttpGet("/Todos")]
+    public async Task<PartialViewResult> GetTodosListPartialView()
+    {
+        IList<IWorkItem> itemsList = await _service.GetListOfTodoItems();
+        return PartialView("_Todos", itemsList);
+    }
+
+    [HttpGet("/Doing")]
+    public async Task<IActionResult> GetDoingListPartialView()
+    {
+        IList<IWorkItem> itemsList = await _service.GetListOfDoingItems();
+        return PartialView("_Doing", itemsList);
+    }
+
+    [HttpGet("/Done")]
+    public async Task<IActionResult> GetDoneListPartialView()
+    {
+        IList<IWorkItem> itemsList = await _service.GetListOfDoneItems();
+        return PartialView("_Done", itemsList);
     }
 }

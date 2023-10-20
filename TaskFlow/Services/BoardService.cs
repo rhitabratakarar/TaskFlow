@@ -46,6 +46,24 @@ public class BoardService : IBoardService
         return await this._dbContext.WorkItems.ToListAsync<IWorkItem>();
     }
 
+    public async Task<IList<IWorkItem>> GetListOfDoingItems()
+    {
+        IList<IWorkItem> workItems = await _dbContext.WorkItems.Where<IWorkItem>(i => i.Status == Status.Doing).ToListAsync<IWorkItem>();
+        return workItems;
+    }
+
+    public async Task<IList<IWorkItem>> GetListOfDoneItems()
+    {
+        IList<IWorkItem> workItems = await _dbContext.WorkItems.Where<IWorkItem>(i => i.Status == Status.Done).ToListAsync<IWorkItem>();
+        return workItems;
+    }
+
+    public async Task<IList<IWorkItem>> GetListOfTodoItems()
+    {
+        IList<IWorkItem> workItems = await _dbContext.WorkItems.Where<IWorkItem>(i => i.Status == Status.Todo).ToListAsync<IWorkItem>();
+        return workItems;
+    }
+
     public async Task<bool> UpdateItemStatus(int? idToUpdate, Status statusToUpdateTo)
     {
         if (idToUpdate == null)
